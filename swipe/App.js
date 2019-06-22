@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Card, Button } from 'react-native-elements'
+import { Constants } from 'expo'
 
 import Deck from './src/Deck'
 import data from './data'
@@ -19,10 +20,24 @@ export default class App extends React.Component {
     )
   }
 
+  renderNoMoreCards() {
+    return (
+      <Card title="All Done!">
+        <Text style={{ marginBottom: 10 }}>There's no more content here!</Text>
+        <Button backgroundColor="#03A9F4" title="Get More!" />
+      </Card>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Deck data={data} renderCard={item => this.renderCard(item)} />
+        <View style={styles.statusBar} />
+        <Deck
+          data={data}
+          renderCard={item => this.renderCard(item)}
+          renderNoMoreCards={this.renderNoMoreCards}
+        />
       </View>
     )
   }
@@ -32,5 +47,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+  },
+  statusBar: {
+    backgroundColor: '#03A9F4',
+    height: Constants.statusBarHeight
   }
 })
